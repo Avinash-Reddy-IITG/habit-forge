@@ -13,7 +13,7 @@ This project is optimized for deployment on platforms like **Render**, **Railway
 ### Deployment on Render (Recommended)
 1. **New Web Service**: Connect your GitHub repository.
 2. **Root Directory**: `.` (Keep as root)
-3. **Build Command**: `npm run install-all && npm run build`
+3. **Build Command**: `npm run build`
 4. **Start Command**: `npm start`
 5. **Environment Variables**:
    - `NODE_ENV`: `production`
