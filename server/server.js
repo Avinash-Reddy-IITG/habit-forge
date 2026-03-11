@@ -63,29 +63,35 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 5000;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/habit-tracker';
 
-let isConnected = false;
-
 const connectDB = async () => {
-    if (isConnected) return;
+    if (mongoose.connection.readyState >= 1) return;
     try {
-        await mongoose.connect(MONGODB_URI);
-        isConnected = true;
+        await mongoose.connect(MONGODB_URI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
         console.log('Connected to MongoDB');
     } catch (error) {
         console.error('MongoDB connection error:', error);
+        throw error;
     }
 };
 
+// Middleware to ensure DB is connected
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (error) {
+        res.status(500).json({ message: 'Database connection failed' });
+    }
+});
+
 // For local development
 if (process.env.NODE_ENV !== 'production') {
-    connectDB().then(() => {
-        app.listen(PORT, () => {
-            console.log(`Server is listening on port ${PORT}`);
-        });
+    app.listen(PORT, () => {
+        console.log(`Server is listening on port ${PORT}`);
     });
-} else {
-    // In production (Vercel), we connect on demand or at startup
-    connectDB();
 }
 
 export default app;
