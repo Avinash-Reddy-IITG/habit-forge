@@ -4,8 +4,6 @@ HabitForge is a full-stack premium habit tracker designed with a futuristic "Gam
 
 ## 🚀 Deployment Guide
 
-This project is optimized for deployment on platforms like **Render**, **Railway**, or **Heroku**.
-
 ### Preparation
 1. **GitHub**: Ensure your code is pushed to a GitHub repository.
 2. **Database**: You will need a MongoDB connection string (e.g., from [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)).
@@ -15,11 +13,17 @@ This project is optimized for deployment on platforms like **Render**, **Railway
 2. **Framework Preset**: Choose **Other** (Vercel will detect `vercel.json`).
 3. **Environment Variables**:
    - `MONGODB_URI`: Your MongoDB connection string.
-   - `JWT_SECRET`: A secure random string.
+   - `JWT_SECRET`: A secure random string for security.
 4. **Deploy**: Vercel will automatically build the client and route API requests to the server.
 
-### Deployment on Render (Recommended for Background Jobs)
-... (keep existing)
+### Deployment on Render (Alternative)
+1. **New Web Service**: Connect your GitHub repository.
+2. **Build Command**: `npm run build`
+3. **Start Command**: `npm start`
+4. **Environment Variables**:
+   - `NODE_ENV`: `production`
+   - `MONGODB_URI`: Your MongoDB connection string.
+   - `JWT_SECRET`: A secure random string.
 
 ## 🛠️ Tech Stack
 - **Frontend**: React, Vite, Tailwind CSS, Framer Motion, Recharts.
