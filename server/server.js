@@ -29,6 +29,34 @@ initRedis();
 // Init Background Jobs
 initJobs();
 
+// MongoDB Connection Setup
+const PORT = process.env.PORT || 5000;
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/habit-tracker';
+
+const connectDB = async () => {
+    if (mongoose.connection.readyState >= 1) return;
+    try {
+        await mongoose.connect(MONGODB_URI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+        console.log('Connected to MongoDB');
+    } catch (error) {
+        console.error('MongoDB connection error:', error);
+        throw error;
+    }
+};
+
+// Middleware to ensure DB is connected
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (error) {
+        res.status(500).json({ message: 'Database connection failed' });
+    }
+});
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/goals', goalRoutes);
@@ -58,34 +86,6 @@ if (process.env.NODE_ENV === 'production') {
 // Error Handling Middleware
 app.use(notFound);
 app.use(errorHandler);
-
-// MongoDB Connection
-const PORT = process.env.PORT || 5000;
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/habit-tracker';
-
-const connectDB = async () => {
-    if (mongoose.connection.readyState >= 1) return;
-    try {
-        await mongoose.connect(MONGODB_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
-        console.log('Connected to MongoDB');
-    } catch (error) {
-        console.error('MongoDB connection error:', error);
-        throw error;
-    }
-};
-
-// Middleware to ensure DB is connected
-app.use(async (req, res, next) => {
-    try {
-        await connectDB();
-        next();
-    } catch (error) {
-        res.status(500).json({ message: 'Database connection failed' });
-    }
-});
 
 // For local development
 if (process.env.NODE_ENV !== 'production') {
