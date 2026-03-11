@@ -10,16 +10,16 @@ This project is optimized for deployment on platforms like **Render**, **Railway
 1. **GitHub**: Ensure your code is pushed to a GitHub repository.
 2. **Database**: You will need a MongoDB connection string (e.g., from [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)).
 
-### Deployment on Render (Recommended)
-1. **New Web Service**: Connect your GitHub repository.
-2. **Root Directory**: `.` (Keep as root)
-3. **Build Command**: `npm run build`
-4. **Start Command**: `npm start`
-5. **Environment Variables**:
-   - `NODE_ENV`: `production`
+### Deployment on Vercel
+1. **New Project**: Import your repository from GitHub.
+2. **Framework Preset**: Choose **Other** (Vercel will detect `vercel.json`).
+3. **Environment Variables**:
    - `MONGODB_URI`: Your MongoDB connection string.
-   - `JWT_SECRET`: A long, random string for security.
-   - `VITE_API_URL`: (Optional) If you serve the frontend separately, point this to your backend URL. If serving together via the Express server, this defaults to the correct relative path.
+   - `JWT_SECRET`: A secure random string.
+4. **Deploy**: Vercel will automatically build the client and route API requests to the server.
+
+### Deployment on Render (Recommended for Background Jobs)
+... (keep existing)
 
 ## 🛠️ Tech Stack
 - **Frontend**: React, Vite, Tailwind CSS, Framer Motion, Recharts.
