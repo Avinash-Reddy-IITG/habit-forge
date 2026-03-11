@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --primary: #4f46e5;
+    /* Indigo 600 */
+    --primary-glow: rgba(79, 70, 229, 0.4);
+    --secondary: #0ea5e9;
+    /* Sky 500 */
+    --secondary-glow: rgba(14, 165, 233, 0.4);
+    --accent: #f43f5e;
+    --background: #020617;
+    --surface: #0f172a;
+    --glass-bg: rgba(15, 23, 42, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.08);
+}
+
+@layer base {
+    body {
+        @apply bg-[#020617] text-slate-200 antialiased font-['Inter'];
+        font-family: 'Inter', 'Space Grotesk', sans-serif;
+        overflow-x: hidden;
+        background-image:
+            radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%),
+            radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 0.1) 0, transparent 50%),
+            radial-gradient(at 100% 100%, hsla(250, 49%, 30%, 0.05) 0, transparent 50%);
+        background-attachment: fixed;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply font-['Space_Grotesk'] tracking-tight;
+    }
+}
+
+@layer components {
+    .glass {
+        @apply backdrop-blur-2xl border;
+        background: var(--glass-bg);
+        border-color: var(--glass-border);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    }
+
+    .glass-card {
+        @apply glass rounded-3xl p-6 transition-all duration-500 ease-out border-white/5;
+    }
+
+    .glass-card:hover {
+        @apply border-white/20;
+        transform: translateY(-4px) scale(1.01);
+        box-shadow: 0 20px 50px 0 rgba(0, 0, 0, 0.7), 0 0 20px rgba(79, 70, 229, 0.1);
+    }
+
+    .neo-glow-primary {
+        box-shadow: 0 0 30px var(--primary-glow);
+    }
+
+    .neo-glow-secondary {
+        box-shadow: 0 0 30px var(--secondary-glow);
+    }
+
+    .sidebar-item {
+        @apply flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-300 text-slate-400 hover:text-white hover:bg-white/5;
+    }
+
+    .sidebar-item.active {
+        @apply text-white bg-indigo-500/10;
+        box-shadow: inset 0 0 20px rgba(79, 70, 229, 0.05);
+    }
+
+    .btn-primary {
+        @apply bg-primary hover:bg-indigo-500 text-white font-bold py-3 px-8 rounded-2xl transition-all duration-300 active:scale-95 shadow-lg shadow-primary/30 flex items-center justify-center gap-2;
+    }
+
+    .btn-outline {
+        @apply border-2 border-white/10 hover:bg-white/5 text-white font-bold py-3 px-8 rounded-2xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2;
+    }
+
+    .stat-card {
+        @apply glass-card relative overflow-hidden;
+    }
+
+    .stat-card::before {
+        content: '';
+        @apply absolute -top-24 -right-24 w-48 h-48 rounded-full blur-[80px] transition-opacity duration-500 opacity-20 pointer-events-none;
+        background: var(--primary);
+    }
+
+    .stat-card:hover::before {
+        @apply opacity-40;
+    }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+    @apply bg-slate-800 rounded-full hover:bg-slate-700 transition-colors;
+}
+
+/* Recharts customization */
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+    stroke: rgba(255, 255, 255, 0.03);
+}
+
+.recharts-tooltip-cursor {
+    fill: rgba(255, 255, 255, 0.02);
+}
+
+.text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60;
+}
